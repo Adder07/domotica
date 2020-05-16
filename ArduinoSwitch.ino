@@ -21,72 +21,35 @@ void setup() {
   Serial.begin(9600); //Se inicia la comunicación serie
 }
 
-void loop() {
-  if (Serial.available() > 0) {
-
+void loop(){
+  if(Serial.available() > 0){
     input = Serial.read();
-
-      
-    if (input == '1'){
-      Fr_valor_pin_0=analogRead(Fr_pin_0);
-      Serial.println(Fr_valor_pin_0);
-      delay(100);
-  
-  
-  if(Fr_valor_pin_0 < Valor_punto_medio){
-    digitalWrite(8,HIGH);
-  } else {
-    digitalWrite(8,LOW);
   }
-  //-----------------------------------
-  Fr_valor_pin_0=analogRead(Fr_pin_1);
-  delay(100);
-  if(Fr_valor_pin_0 < Valor_punto_medio){
-    digitalWrite(9,HIGH);
-    }else{
-      digitalWrite(9,LOW);
-      }
-  //------------------------------------
-  Fr_valor_pin_0=analogRead(Fr_pin_2);
-  delay(100);
-  if(Fr_valor_pin_0 < Valor_punto_medio){
-    digitalWrite(10,HIGH);
-    }else{
-      digitalWrite(10,LOW);
-      }
- //--------------------------------------
- Fr_valor_pin_0 =analogRead(Fr_pin_3);
-  delay(100);
-  if(Fr_valor_pin_0 < Valor_punto_medio){
-    digitalWrite(11,HIGH);
-    }else{
-      digitalWrite(11,LOW);
-      }
-
-//------------------------------------------------
-  
-     }
+  if(input == '1'){
+    leerSensor(Fr_pin_0,8);
+    leerSensor(Fr_pin_1,9);
+    leerSensor(Fr_pin_2,10);
+    leerSensor(Fr_pin_3,11);
+  }else if(input == '0'){
+    apagarTodoLed()
   }
-  
-  }
+}
 
-
+void leerSensor(int n_pin_read, int n_pin_write){
+    Fr_valor_pin_0 = analogRead(n_pin);
+    if(Fr_valor_pin_0 < Valor_punto_medio){
+      digitalWrite(n_pin_write,HIGH);
+    } else {
+      digitalWrite(n_pin_write,LOW);
+    }
+}
 
 void apagarTodoLed(){
-  if (Serial.available() > 0) {
-
-    input = Serial.read();
-
-      
-    if (input == '1'){
-      digitalWrite(8,LOW);
-      digitalWrite(9,LOW);
-      digitalWrite(10,LOW);
-      digitalWrite(11,LOW);
-      delay(5000);
-     }
-  }
-  
+    digitalWrite(8,LOW);
+    digitalWrite(9,LOW);
+    digitalWrite(10,LOW);
+    digitalWrite(11,LOW);
+    delay(5000); 
 }  
 
 
@@ -95,12 +58,12 @@ void encenderTodoLed(){
   digitalWrite(9,HIGH);
   digitalWrite(10,HIGH);
   digitalWrite(11,HIGH);
-  }
+}
 
 
-  void lecturaSens(){
-    analogRead(Fr_pin_0);
-    analogRead(Fr_pin_1);
-    analogRead(Fr_pin_2);
-    analogRead(Fr_pin_0);
-    }
+void lecturaSens(){
+  analogRead(Fr_pin_0);
+  analogRead(Fr_pin_1);
+  analogRead(Fr_pin_2);
+  analogRead(Fr_pin_0);
+}
